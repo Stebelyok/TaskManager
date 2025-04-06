@@ -1,0 +1,69 @@
+﻿<Window x:Class="TaskManager.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskManager.Views"
+        xmlns:utils="clr-namespace:TaskManager.Utils"
+        mc:Ignorable="d"
+        Title="TaskManager" Height="450" Width="800"
+        MinHeight="450" MinWidth="800"
+        Icon="/Resources/Images/Logo.ico">
+    <Window.Resources>
+        <utils:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="10,0"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Regular"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!-- Sidebar -->
+        <Border Visibility="{Binding IsSidebarVisible, Converter={StaticResource boolToVisibilityConverter}}">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <Image Source="/Resources/Images/Logo.png" 
+                           VerticalAlignment="Center"
+                           Height="45" 
+                           Width="45" 
+                           Margin="10"/>
+                    <TextBlock FontSize="20" 
+                               FontWeight="Bold" 
+                               VerticalAlignment="Center">
+                        TaskManager
+                    </TextBlock>
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                    <TextBlock DataContext="{Binding CurrentAccount}" Text="{Binding Email}" VerticalAlignment="Center" FontSize="14"/>
+                    <Image Source="/Resources/Images/user.png" Height="40" Width="40" Margin="10"/>
+                </StackPanel>
+
+            </DockPanel>
+        </Border>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" >
+            <ContentControl Content="{Binding CurrentViewModel}"/>
+        </ScrollViewer>
+    </Grid>
+</Window>
