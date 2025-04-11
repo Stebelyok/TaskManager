@@ -22,6 +22,7 @@ namespace TaskManager.HostBuilders
                 services.AddSingleton<IAccountService, AccountService>();
                 services.AddSingleton<IUserService, UserService>();
                 services.AddSingleton<ITodoTaskService, TodoTaskService>();
+                services.AddSingleton<IUserExportService, UserExportService>();
             });
 
             return host;

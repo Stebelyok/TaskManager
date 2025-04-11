@@ -47,7 +47,15 @@ namespace TaskManager.ViewModels
 
             UpdateCurrentViewModelCommand = new UpdateCurrentViewModelCommand(navigator, _viewModelFactory);
 
-            UpdateCurrentViewModelCommand.Execute(ViewType.Login);
+            if (IsLoggedIn)
+            {
+                UpdateCurrentViewModelCommand.Execute(ViewType.Home);
+                _sidebarVisible.UpdateSidebarVisability(true);
+            } 
+            else
+            {
+                UpdateCurrentViewModelCommand.Execute(ViewType.Login);
+            }
         }
 
         private void SidebarVisible_StateChanged()

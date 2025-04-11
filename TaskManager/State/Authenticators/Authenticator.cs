@@ -14,11 +14,15 @@ namespace TaskManager.State.Authenticators
     {
         private readonly IAccountService _accountService;
         private readonly IAccountStore _accountStore;
+        private readonly IUserExportService _userExportService;
 
-        public Authenticator(IAccountService accountService, IAccountStore accountStore)
+        public Authenticator(IAccountService accountService,
+                             IAccountStore accountStore,
+                             IUserExportService userExportService)
         {
             _accountService = accountService;
             _accountStore = accountStore;
+            _userExportService = userExportService;
         }
 
 
@@ -39,6 +43,7 @@ namespace TaskManager.State.Authenticators
         public async Task Login(LoginDto loginDto)
         {
             var user = await _accountService.LoginAsync(loginDto);
+            await _userExportService.ExportUserToJsonStringAsync(user);
             CurrentAccount = user;
         }
 
@@ -50,6 +55,7 @@ namespace TaskManager.State.Authenticators
         public async Task Register(RegisterDto registerDto)
         {
             var user = await _accountService.RegisterAsync(registerDto);
+            await _userExportService.ExportUserToJsonStringAsync(user);
             CurrentAccount = user;
         }
     }
